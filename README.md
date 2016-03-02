@@ -1,6 +1,6 @@
 # Configuration
 
-**Notice : This is not event close to be ready yet ( It  doesn't even have a good name :) ) use own your own risk!**
+**Notice : This is not even close to being ready yet ( It  doesn't even have a good name :) ) use own your own risk!**
 
 A Simple Configuration load/save/manage implementation 
 
