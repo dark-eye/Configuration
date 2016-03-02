@@ -1,6 +1,7 @@
 # Configuration
 
-A Simple Configuration load/save/manage implementation
+*Notice : This is not event close to be ready yet ( It  doesn't even have a good name :) ) use own your own risk!*
+A Simple Configuration load/save/manage implementation 
 
 ## Installation
 
