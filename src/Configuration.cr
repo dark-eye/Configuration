@@ -40,5 +40,8 @@ module Configuration
 		public def searchInConfig( key )
 		 #TODO : implment
 		end
+		
+		# ================ Protected =================
+
 	end
 end

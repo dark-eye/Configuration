@@ -3,11 +3,11 @@ require "../configuration.cr"
 module Configuration
 	abstract class ConfigurationFormat	
 		#Return format from configuration
-		abstract def getFormat( config : ConfigHash )
+		abstract public def getFormat( config : ConfigHash )
 		end
 		
 		#Return configuration from format
-		abstract def getConfig( format )
+		abstract public def getConfig( format )
 		end
 	end
 	
