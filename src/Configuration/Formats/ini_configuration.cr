@@ -15,8 +15,16 @@ module Configuration
 		# =============== Protected =================
 		
 		protected def parse( config, iniString )
+			section = Nil;
 			iniString.each_line do |line|
-				config.merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )
+				if(line~=/^\[\w+\]$/) {
+					section =  line.replace(/[\[\]]//g)
+				}
+				if(section?) {
+					config[section].merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )
+				} else {
+					config.merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )
+				}
 			end
 
 			return config
@@ -31,6 +39,17 @@ module Configuration
 		def
 
 		protected def generate( config )
+			if(!config.is_array?) {
+				return "=" + config + "\n";
+			}
+			
+			retString : String
+			#TODO add section support
+			config.each do iter
+				retString += self.generate(iter[1]).replace(/^/gm,iter[0]+".")
+			end
+			
+			return retString
 		end
 		
 	end
