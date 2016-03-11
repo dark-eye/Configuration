@@ -31,6 +31,7 @@ module Configuration
 		end
 		
 		protected def praseLine( line )
+			#TODO add section support
 			Array splitted =  line.split(".",2);
 			if(splitted[1]?) {
 				return Hash( splitted[0], self.parseLine( splitted[1] ));
@@ -39,14 +40,14 @@ module Configuration
 		def
 
 		protected def generate( config )
-			if(!config.is_array?) {
+			if(!config.is_a?(String)) {
 				return "=" + config + "\n";
 			}
 			
-			retString : String
+			retString : String = ""			
 			#TODO add section support
-			config.each do iter
-				retString += self.generate(iter[1]).replace(/^/gm,iter[0]+".")
+			config.each do |key, value|
+				retString += self.generate(value).gsub(/^(?!\=)/m,key+".")
 			end
 			
 			return retString
