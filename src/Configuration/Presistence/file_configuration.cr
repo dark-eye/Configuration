@@ -2,7 +2,7 @@ require "file"
 require "./presistent_configuration.cr"
 
 module Configuration
-	class FileConfiguration : PresistentConfiguration
+	class FileConfiguration < PresistentConfiguration
 
 		def initialize( @path )
 

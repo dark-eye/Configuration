@@ -1,14 +1,11 @@
-require "../configuration.cr"
+require "../../Configuration.cr"
 
 module Configuration
-	abstract class ConfigurationFormat	
+	abstract class ConfigurationFormat
 		#Return format from configuration
-		abstract public def getFormat( config : ConfigHash )
-		end
+		abstract def getFormat( config : ConfigHash )
 		
 		#Return configuration from format
-		abstract public def getConfig( format )
-		end
+		abstract def getConfig( format )
 	end
-	
 end

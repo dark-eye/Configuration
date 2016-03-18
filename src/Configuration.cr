@@ -22,7 +22,7 @@ module Configuration
 		end
 		
 		public def [](key)
-			return @config[key]
+			return self.getByDotSeperated( key, @config )
 		end
 		
 		public def [](key, default)
@@ -30,20 +30,21 @@ module Configuration
 		end
 		
 		public def []=(index,value)
+			#TODO  add support  for  dot seperated access
 			@config[index] = value
 		end
 
 		public def searchInConfig( key )
-		 #TODO : implment
+			#TODO  implement
 		end
-		
-		
+
 		# ================ Protected =================
 		
 		protected def getWithDefault( key , defVal )
-			if(@config[key]) {
-				return @config[key]
-			}
+		
+			if( self.getByDotSeperated(key, @config) )
+				return self.getByDotSeperated( key ,@config )
+			end
 			return defVal
 		end
 		

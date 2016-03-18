@@ -1,7 +1,7 @@
 require "./configuration_format.cr"
 
 module Configuration
-	class IniConfiguration : ConfigurationFormat
+	class IniConfiguration < ConfigurationFormat
 
 		public def getFormat( config )
 			
@@ -19,14 +19,14 @@ module Configuration
 		protected def parse( config, iniString )
 			section = Nil;
 			iniString.each_line do |line|
-				if(line~=/^\[\w+\]$/) {
+				if( /^\[\w+\]$/.match(line) )
 					section =  line.gsub(/[\[\]]/,"")
-				}
-				if(section?) {
+				end
+				if(section?)
 					config[section].merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )
-				} else {
+				else
 					config.merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )
-				}
+				end
 			end
 
 			return config
@@ -36,22 +36,22 @@ module Configuration
 		#
 		#
 		protected def praseLine( line )
-			Array splitted =  line.split(".",2);
-			if(splitted[1]?) {
-				return Hash( splitted[0], self.parseLine( splitted[1] ));
-			}
+			splitted =  line.split(".",2);
+			if(splitted[1]?)
+				return { splitted[0] , self.parseLine( splitted[1] ) };
+			end
 			return line.gsub(/"/,"")
-		def
+		end
 
 		#
 		#
 		#
 		protected def generate( configValues )
-			if(configValues.is_a?(String)) {
+			if(configValues.is_a?(String))
 				return "=" + configValues + "\n";
-			}
+			end
 			
-			retString : String = ""			
+			retString = ""
 			#TODO add section support
 			configValues.each do |key, value|
 				retString += self.generate(value).gsun(/^(?!\=)/m,".").gsub(/^/m,key)

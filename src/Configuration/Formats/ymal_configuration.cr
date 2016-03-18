@@ -3,7 +3,7 @@ require "yaml"
 require "./configuration_format.cr"
 
 module Configuration
-	class JsonConfiguration : ConfigurationFormat
+	class JsonConfiguration < ConfigurationFormat
 
 		public def getFormat( config : ConfigHash )
 			return config.to_ymal

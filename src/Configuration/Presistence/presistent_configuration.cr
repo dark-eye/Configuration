@@ -6,9 +6,7 @@ module Configuration
 		end
 		
 		abstract def open
-		end
 		
 		abstract def save
-		end
 	end
 end

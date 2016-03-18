@@ -4,7 +4,7 @@ require "json"
 require "./configuration_format.cr"
 
 module Configuration
-	class JsonConfiguration : ConfigurationFormat
+	class JsonConfiguration < ConfigurationFormat
 
 		public def getFormat( config )
 			return config.to_yaml
