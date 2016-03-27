@@ -4,10 +4,22 @@ require "./presistent_configuration.cr"
 module Configuration
 	class FileConfiguration < PresistentConfiguration
 
-		def initialize( @path )
-
+		def initialize(@path : String)
+			case(@path)
+				
+			when/yaml$/
+				@formater = YamlConfiguration.new
+			when /ini$/
+				@formater = IniConfiguration.new
+			else	# the configuration defaults to JSON
+				@formater = JsonConfiguration.new
+			end
 		end
 
+		def initialize(@path : String, @formater : ConfigurationFormat)
+		end
+		
+		
 		def load
 			data = File.read( @path )
 			@config = @formater.getConfig( data )

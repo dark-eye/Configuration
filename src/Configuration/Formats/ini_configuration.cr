@@ -3,12 +3,12 @@ require "./configuration_format.cr"
 module Configuration
 	class IniConfiguration < ConfigurationFormat
 
-		public def getFormat( config )
+		def getFormat( config )
 			
 		end
 
-		public def getConfig(iniConfig : String)
-			return this.prase( iniConfig )
+		def getConfig(iniConfig : String)
+			return self.parse( Configuration.new, iniConfig )
 		end
 		
 		# =============== Protected =================
@@ -19,10 +19,10 @@ module Configuration
 		protected def parse( config, iniString )
 			section = Nil;
 			iniString.each_line do |line|
-				if( /^\[\w+\]$/.match(line) )
+				if( line =~ /^\[\w+\]$/ )
 					section =  line.gsub(/[\[\]]/,"")
 				end
-				if(section?)
+				if(section)
 					config[section].merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )
 				else
 					config.merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )

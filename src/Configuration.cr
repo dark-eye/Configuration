@@ -1,60 +1,69 @@
-require "./Configuration/*"
+require "./Configuration/**"
 
 module Configuration
-	alias ConfigHash = Hash(String,(Array(ConfigHash)|String|Int32|Float64|Float32|ConfigHash|Nil))
+	alias Types = Nil | Bool | Int32 | Int64 | Float64 | String
+	alias ConfigHash =  Hash(String, Types) | Hash(String, ConfigHash) | Types
 	
 	class Configuration
 		
-		@config = new ConfigHash
+		def initialize()
+			@config = Hash(String, ConfigHash).new
+		end
 		
-		def initialize(@config : ConfigHash)
+		def initialize(@config )
 		end
 		
 		def initialize(config : Configuration)
 			@config = config.config
 		end
 		
-		public def config=
+		def config=
 		end
 		
-		public def config
+		def config
 			return @config
 		end
 		
-		public def [](key)
+		def [](key)
 			return self.getByDotSeperated( key, @config )
 		end
 		
-		public def [](key, default)
-			return self.getWithDefault( key , default )
-		end
-		
-		public def []=(index,value)
-			#TODO  add support  for  dot seperated access
-			@config[index] = value
-		end
-
-		public def searchInConfig( key )
-			#TODO  implement
-		end
-
-		# ================ Protected =================
-		
-		protected def getWithDefault( key , defVal )
-		
+		# Get with default value
+		def [](key, default)
 			if( self.getByDotSeperated(key, @config) )
 				return self.getByDotSeperated( key ,@config )
 			end
 			return defVal
 		end
 		
+		def []=(key ,value)
+			#TODO  add support for dot seperated access/setting
+			@config[key] = value
+		end
+
+		def searchInConfig( key )
+			#TODO  implement
+		end
+
+		# ================ Protected =================
+		
 		protected def getByXPAth( xpath )
 			#TODO : implement
 		end
 		
 		protected def getByDotSeperated( dotSeperatedKey , conf )
-			splited = dotSeperatedKey.split('.',2)
-			return conf[splited[0]].is_a?(ConfigHash) ? self.getByDotSeperated(splited[1],conf[splited[0]]) : conf[splited[0]]?;
+			if( conf.responds_to?(:[]) && dotSeperatedKey )
+				splited = dotSeperatedKey.split('.',2)
+				key = splited.size() > 1 ? splited[1] : ""
+				if(!conf.is_a?(Array) || splited[0].is_a?(Int32 | Int64) )
+					return self.getByDotSeperated(key, conf[splited[0]])
+				else
+					return Nil
+				end
+			else
+				return conf
+			end
+			
 		end
 	end
 end

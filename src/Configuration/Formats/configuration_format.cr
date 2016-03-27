@@ -1,4 +1,4 @@
-require "../../Configuration.cr"
+
 
 module Configuration
 	abstract class ConfigurationFormat
