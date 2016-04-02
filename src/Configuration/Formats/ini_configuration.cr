@@ -1,6 +1,6 @@
-require "./configuration_format.cr"
+require "./configuration_format"
 
-module Configuration
+module ConfigIt
 	class IniConfiguration < ConfigurationFormat
 
 		def getFormat( config )
@@ -22,9 +22,9 @@ module Configuration
 				if( line =~ /^\[\w+\]$/ )
 					section =  line.gsub(/[\[\]]/,"")
 				end
-				if(section)
+				if(section && config.responds_to?(:merge))
 					config[section].merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )
-				else
+				 elsif(config.responds_to?(:merge))
 					config.merge( self.parseLine( line.gsub(/[#;].*$/,"") ) )
 				end
 			end
@@ -35,10 +35,10 @@ module Configuration
 		#
 		#
 		#
-		protected def praseLine( line )
+		protected def parseLine( line )
 			splitted =  line.split(".",2);
 			if(splitted[1]?)
-				return { splitted[0] , self.parseLine( splitted[1] ) };
+				return { splitted[0] as String, self.parseLine( splitted[1] ) as ConfigHash };
 			end
 			return line.gsub(/"/,"")
 		end

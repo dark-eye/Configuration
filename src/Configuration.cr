@@ -1,6 +1,6 @@
 require "./Configuration/**"
 
-module Configuration
+module ConfigIt
 	alias Types = Nil | Bool | Int32 | Int64 | Float64 | String
 	alias ConfigHash =  Hash(String, Types) | Hash(String, ConfigHash) | Types
 	
@@ -52,7 +52,7 @@ module Configuration
 		end
 		
 		protected def getByDotSeperated( dotSeperatedKey , conf )
-			if( conf.responds_to?(:[]) && dotSeperatedKey )
+			if( conf.responds_to?(:[]) && dotSeperatedKey.is_a?(String)  )
 				splited = dotSeperatedKey.split('.',2)
 				key = splited.size() > 1 ? splited[1] : ""
 				if(!conf.is_a?(Array) || splited[0].is_a?(Int32 | Int64) )

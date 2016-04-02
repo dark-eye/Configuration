@@ -1,6 +1,7 @@
+require "../../Configuration"
 
 
-module Configuration
+module ConfigIt
 	abstract class ConfigurationFormat
 		#Return format from configuration
 		abstract def getFormat( config : ConfigHash )

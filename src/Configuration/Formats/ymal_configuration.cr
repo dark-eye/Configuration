@@ -1,8 +1,8 @@
 require "yaml"
 
-require "./configuration_format.cr"
+require "./configuration_format"
 
-module Configuration
+module ConfigIt
 	class JsonConfiguration < ConfigurationFormat
 
 		def getFormat( config : ConfigHash )

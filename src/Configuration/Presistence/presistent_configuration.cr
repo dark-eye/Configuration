@@ -1,5 +1,8 @@
-module Configuration
-	abstract class PresistentConfiguration
+require "../../Configuration"
+
+module ConfigIt
+	abstract class PresistentConfiguration < ConfigIt::Configuration
+
 		@formater : ConfigurationFormat
 		
 		def initialize(@formater)

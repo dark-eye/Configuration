@@ -1,18 +1,17 @@
 require "file"
-require "./presistent_configuration.cr"
+require "./presistent_configuration"
 
-module Configuration
+module ConfigIt
 	class FileConfiguration < PresistentConfiguration
 
 		def initialize(@path : String)
-			case(@path)
-				
-			when/yaml$/
-				@formater = YamlConfiguration.new
-			when /ini$/
-				@formater = IniConfiguration.new
-			else	# the configuration defaults to JSON
-				@formater = JsonConfiguration.new
+			case(@path)				
+				when/yaml$/
+					@formater = YamlConfiguration.new
+				when /ini$/
+					@formater = IniConfiguration.new
+				else	# the configuration defaults to JSON
+					@formater = JsonConfiguration.new
 			end
 		end
 
